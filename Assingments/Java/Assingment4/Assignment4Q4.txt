@@ -1,0 +1,21 @@
+import java.util.ArrayList;
+
+public class Assignment4Q4 {
+    public static ArrayList<String> removeOddLength(ArrayList<String> List){
+     List.removeIf(list-> ((list.length())%2!=0));
+     return List;
+    }
+    public static void main(String[] args) {
+        ArrayList<String> list = new ArrayList<>();
+        list.add("One");
+        list.add("Two");
+        list.add("Three");
+        list.add("Four");
+        list.add("Five");
+        
+        removeOddLength(list);
+        list.forEach(System.out::println);
+        
+        
+     }
+}

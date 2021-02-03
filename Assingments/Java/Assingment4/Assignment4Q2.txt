@@ -1,0 +1,29 @@
+import java.util.*;
+public class arraylist{
+    public static void main(String args[])
+    {
+    ArrayList<Assignment4Q2> a=new ArrayList<Assignment4Q2>();
+    a.add(new Assignment4Q2(10003,"Completed"));
+    a.add(new Assignment4Q2(10001,"not"));
+    a.add(new Assignment4Q2(10002,"Accepted"));
+    
+    a.removeIf(b -> (b.totalPrice <=10000));
+   
+      System.out.println("The final list is: ");
+      for(Assignment4Q2 b : a) {
+         System.out.println(b.totalPrice);
+         System.out.println(b.status);
+      }
+        
+    }
+    public static class Assignment4Q2 {
+
+    static public int totalPrice;
+    static public String status;
+
+    public Assignment4Q2(int totalPrice,String status){
+        this.totalPrice=totalPrice;
+        this.status=status;
+    }
+}
+}
