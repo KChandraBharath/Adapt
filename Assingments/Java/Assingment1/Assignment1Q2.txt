@@ -1,0 +1,31 @@
+class ArmstrongNumBetweenRange{
+    
+    public static int armstrongNumbersInRange(int min , int max){
+        int i;
+        for(i=min;i<=max;i++)
+        {
+            int sum=0;
+            int r=0;
+            int n=i;
+            while(i>0)
+            {
+                r=i%10;
+                sum+=r*r*r;
+                i=i/10;
+                
+            }
+            if(sum==n)
+            {
+                System.out.println(n+ " ");
+            }
+        }
+      
+    }
+}
+
+public class Assignment1Q2 extends ArmstrongNumBetweenRange{
+    public static int main (String [] args) {
+        System.out.println(armstrongNumbersInRange(100,199));
+        
+    }
+}

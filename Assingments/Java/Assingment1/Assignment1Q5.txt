@@ -1,0 +1,30 @@
+import java.util.*;
+class TaxAmount{
+    public static double calculateTaxAmount(int ctc){
+        if(ctc<180001)
+        {
+            return 0;
+        }
+        else if(ctc<300001)
+        {
+            return(ctc/10);
+        }
+        else if(ctc<500001)
+        {
+            return(ctc/5);
+        }
+        else if(ctc<1000001)
+        {
+            return(ctc*0.3);
+        }
+        return 1;
+    }
+}
+public class Assignment1Q5 extends TaxAmount{
+    public static void main(String args[]) {
+        Scanner sc=new Scanner(System.in);
+        int ctc=sc.nextInt();
+        System.out.println(calculateTaxAmount(ctc));
+        
+    }
+}
