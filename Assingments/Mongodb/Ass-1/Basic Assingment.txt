@@ -1,0 +1,173 @@
+use mongo_practice
+db.movies.insertMany([{title : "Fight Club",
+writer : "Chuck Palahniuko",
+year : 1999,
+actors : [
+ "Brad Pitt",
+ "Edward Norton"
+]},
+{title : "Pulp Fiction",
+writer : "Quentin Tarantino",
+year : 1994,
+actors : [
+ "John Travolta",
+ "Uma Thurman"
+]},
+{title : "Inglorious Basterds",
+writer : "Quentin Tarantino",
+year : 2009,
+actors : [
+ "Brad Pitt",
+ "Diane Kruger",
+ "Eli Roth",
+]},
+{title : "The Hobbit: An Unexpected Journey",
+writer : "J.R.R. Tolkein",
+year : 2012,
+franchise : "The Hobbit"},
+{title : "The Hobbit: The Desolation of Smaug",
+writer : "J.R.R. Tolkein",
+year : 2013,
+franchise : "The Hobbit"},
+{title : "The Hobbit: The Battle of the Five Armies",
+writer : "J.R.R. Tolkein",
+year : 2012,
+franchise : "The Hobbit",
+synopsis : "Bilbo and Company are forced to engage in a war against an array of
+combatants and keep the Lonely Mountain from falling into the hands of a rising
+darkness."},
+{title : "Pee Wee Herman's Big Adventure"},
+{title : "Avatar"}
+])
+
+Query / Find Documents:-
+
+1.Get all documents
+Query:- db.movies.find({})
+2.Get all documents with writer set to "Quentin Tarantino"
+Query:- db.movies.find({writer:"Quentin Tarantino"})
+3.Get all documents where actors include "Brad Pitt"
+Query:- db.movies.find({actors:"Brad Pitt"})
+4.Get all documents with franchise set to "The Hobbit"
+Query:- db.movies.find({franchise:"The Hobbit"})
+5.Get all movies released in the 90s
+Query:- db.movies.find({year:{$lt:2000},year:{$gt:1899}})
+6.Get all movies released before the year 2000 or after 2010
+Query:- db.movies.find({$or:[{year:{$lt:2000}},{year:{$gt:2010}]})
+
+Update Documents:-
+
+1.Add a synopsis to "The Hobbit: An Unexpected Journey" : "A reluctant hobbit,
+Bilbo Baggins, sets out to the Lonely Mountain with a spirited group of
+dwarves to reclaim their mountain home - and the gold within it - from the
+dragon Smaug."
+Query:- db.movies.updateOne({title:"The Hobbit: An Unexpected Journey"},{$set:{synopsis:"A reluctant hobbit,
+Bilbo Baggins, sets out to the Lonely Mountain with a spirited group of
+dwarves to reclaim their mountain home - and the gold within it - from the
+dragon Smaug."}})
+2.Add a synopsis to "The Hobbit: The Desolation of Smaug" : "The dwarves,
+along with Bilbo Baggins and Gandalf the Grey, continue their quest to reclaim
+Erebor, their homeland, from Smaug. Bilbo Baggins is in possession of a
+mysterious and magical ring."
+Query:- db.movies.updateOne({title:"The Hobbit: The Desolation of Smaug"},{$set:{synopsis:"The dwarves,
+along with Bilbo Baggins and Gandalf the Grey, continue their quest to reclaim
+Erebor, their homeland, from Smaug. Bilbo Baggins is in possession of a
+mysterious and magical ring."}})
+3.Add an actor named "Samuel L. Jackson" to the movie "Pulp Fiction"
+Query:- db.movies.updateOne({title:"Pulp Fiction"},{$set:{actors:"Samuel L. Jackson"}})
+
+Text Search:-
+
+db.movies.createIndex({synopsis:"text"})
+1.Find all movies that have a synopsis that contains the word "Bilbo"
+Query:- db.movies.find({$text:{$search:"Bilbo"}})
+2.Find all movies that have a synopsis that contains the word "Gandalf"
+Query:- db.movies.find({$text:{$search:"Gandalf"}})
+3.Find all movies that have a synopsis that contains the word "Bilbo" and not the
+word "Gandalf"
+Query:- db.movies.find({$text:{$search:"Bilbo -Gandalf"}})
+4.Find all movies that have a synopsis that contains the word "dwarves" or
+"hobbit"
+Query:- db.movies.find({$text:{$search:"dwarves hobbit"}})
+5.Find all movies that have a synopsis that contains the word "gold" and
+"dragon"
+Query:- db.movies.find({$text:{$search:"gold dragon"}})
+
+Delete Documents:-
+
+1.Delete the movie "Pee Wee Herman's Big Adventure"
+Query:- db.movies.remove({title:"Pee Wee Herman's Big Adventure"})
+2. delete the movie "Avatar"
+Query:- db.movies.remove({title:"Avatar"})
+
+Relationships:-
+
+Insert the following documents into a users collection
+Query:- db.users.insertMany([{username : "GoodGuyGreg",
+first_name : "Good Guy",
+last_name : "Greg"},
+{username : "ScumbagSteve",
+full_name :
+ [first : "Scumbag",
+ last : "Steve"]}])
+
+Insert the following documents into a posts collection
+Query:- db.posts.insertMany([{username : "GoodGuyGreg",
+title : "Passes out at party",
+body : "Wakes up early and cleans house"},
+{username : "GoodGuyGreg",
+title : "Steals your identity",
+body : "Raises your credit score"},
+{username : "GoodGuyGreg",
+title : "Reports a bug in your code",
+body : "Sends you a Pull Request"},
+{username : "ScumbagSteve",
+title : "Borrows something",
+body : "Sells it"},
+{username : "ScumbagSteve",
+title : "Borrows everything",
+body : "The end"},
+{username : "ScumbagSteve",
+title : "Forks your repo on github",
+body : "Sets to private"}
+])
+
+Insert the following documents into a comments collection
+Query:- db.comments.insertMany([{username : "GoodGuyGreg",
+comment : "Hope you got a good deal!",
+post :"Borrows something"},
+{username : "GoodGuyGreg",
+comment : "What's mine is yours!",
+post :  "Borrows everything"},
+{username : "GoodGuyGreg",
+comment : "Don't violate the licensing agreement!",
+post : "Forks your repo on
+github"},
+{username : "ScumbagSteve",
+comment : "It still isn't clean",
+post : "Passes out at party"},
+{username : "ScumbagSteve",
+comment : "Denied your PR cause I found a hack",
+post : "Reports a bug in your
+code"}
+])
+
+Querying related collections:-
+
+1. Find all users
+Query:- db.users.find({})
+2. Find all posts
+Query:- db.posts.find({})
+3. Find all posts that was authored by "GoodGuyGreg"
+Query:- db.posts.find({username:"GoodGuyGreg"})
+4. Find all posts that was authored by "ScumbagSteve"
+Query:- db.posts.find({username:"ScumbagSteve"})
+5. Find all comments
+Query:- db.comments.find({})
+6. Find all comments that was authored by "GoodGuyGreg"
+Query:- db.comments.find({username:"GoodGuyGreg"})
+7. Find all comments that was authored by "ScumbagSteve"
+Query:- db.comments.find({username:"ScumbagSteve"})
+8. find all comments belonging to the post "Reports a bug in your code"
+Query:-db.comments.find({post:"Reports a bug in your code"})
+
