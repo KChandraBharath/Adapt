@@ -1,0 +1,32 @@
+import java.util.*;
+abstract class Persistence {
+    abstract public String persist();
+}
+class FilePersistence extends Persistence{
+    @Override
+    public String persist() {
+        return "files";
+    }
+}
+class DatabasePersistence extends Persistence{
+    @Override
+    public String persist() {
+        return "database";
+    }
+}
+
+public class Assignment2Q6 {
+    public static void main(String[] args) {
+        Random per=new Random();
+        int x=per.nextInt();
+        FilePersistence s=new FilePersistence();
+        DatabasePersistence d=new DatabasePersistence();
+        
+        if(x%2==0){
+        System.out.println(s.persist());
+        }
+        else{
+        System.out.println(d.persist());
+        }
+    }
+}
